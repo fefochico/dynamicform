@@ -1,0 +1,29 @@
+<div>
+  <a id="back" href='' routerLink="/home">BACK</a>
+</div>
+<form [formGroup]="dataform">
+
+  <ng-container *ngFor="let element of elementform">
+    <div *ngIf="element['type']=='text'" class="form-group">
+      <input type="text" formControlName="{{element['name']}}" placeholder="{{element['label']}}">
+      <span *ngIf="dataform.get(element['name']).touched && 
+      dataform.get(element['name']).invalid">El campo '{{element['label']}}' es necesario</span>
+    </div>
+    <div *ngIf="element['type']=='select' || element['type']=='multiselect'" class="form-group">
+      <select formControlName="{{element['name']}}">
+        <option value="null">{{element['label']}}</option>
+        <option *ngFor="let o of filters[0][element['name']]" value="{{o['value']}}">{{o['label']}}</option>    
+      </select>
+      <span *ngIf="dataform.get(element['name']).touched && 
+      (dataform.get(element['name']).invalid || dataform.get(element['name']).value==null)">El campo '{{element['label']}}' es necesario</span>
+    </div>
+    <div *ngIf="element['type']=='textarea'" class="form-group">
+      <textarea rows="4" cols="50" placeholder="{{element['name']}}" formControlName="{{element['name']}}"></textarea>
+      <span *ngIf="dataform.get(element['name']).touched && 
+      dataform.get(element['name']).invalid">El campo '{{element['label']}}' es necesario</span>
+    </div>
+  </ng-container>
+  <button (click)="save()" [disabled]="dataform.invalid">Guardar</button>
+  </form>
+  
+  

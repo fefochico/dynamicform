@@ -1,0 +1,7 @@
+<div>
+  <a id="add" href='' routerLink="/form">ADD</a>
+</div>
+<div *ngFor="let l of list">
+  {{l['nombre']}}, {{l['apellidos']}}, <input type="button" value="EDIT" (click)="chosenEdit(l)">  
+</div>
+  
