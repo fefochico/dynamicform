@@ -5,20 +5,22 @@ import { routing } from './app.routing';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { FormComponent } from './module/form/form.component';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { FormModule } from './module/form/form.module';
 
+import { RouterTestingModule } from '@angular/router/testing';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    FormComponent,
   ],
   imports: [
     RouterModule,
     BrowserModule,
     ReactiveFormsModule,
+    RouterTestingModule,
+    FormModule,
     routing
   ],
   providers: [],

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { DataService } from 'src/app/service/data.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { ConfigformService } from './service/configform.service';
 
 @Component({
   selector: 'app-form',
@@ -11,73 +12,86 @@ import { ActivatedRoute } from '@angular/router';
 export class FormComponent implements OnInit {
   result = [];
   title = 'dinamic-form';
-  filters=[{ estado: [
-      {value: 1, label: 'Niño'},
-      {value: 2, label: 'Adulto'},
-      {value: 3, label: 'Jubilado'}]
-      ,profesion: [
-      {value: 1, label: 'Estudiante'},
-      {value: 2, label: 'Policía'},
-      {value: 3, label: 'Jubilado'}]
-  }];
-  /* Valor obtenido de una petición externa o definidos aqui */
-  elementform=[
-    {order: 1, name: 'nombre', label: 'Nombre', type: 'text', dependency: 0, required: true},
-    {order: 2, name: 'apellidos', label: 'Apellidos', type: 'text', dependency: 0, required: true},
-    {order: 3, name: 'estado', label: 'Estado', type: 'select', dependency: 0, required: true, options:null},
-    {order: 4, name: 'profesion', label: 'Profesión', type: 'multiselect', dependency: 0, required: false},
-    {order: 4, name: 'observaciones', label: 'Observaciones', type: 'textarea', dependency: 0, required: false},
-  ];
-
   name='persona';
-  dataform=null;
 
-  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private dataService: DataService){
+  filters= null;
+  elementform=null;
+
+  dataform=null;
+  element=null;
+
+  constructor(private router: Router, private formBuilder: FormBuilder, 
+    private dataService: DataService, private configformService: ConfigformService){
+    this.filters= this.configformService.getFiltersForm('persona'); 
+    this.elementform= this.configformService.getConfigForm('persona'); 
   }
 
   ngOnInit(){
-    let element= this.dataService.getElement();
-    if(element==null){
-      this.initForm();
-    }else{
-      this.initFormByElement();
-    }
+    this.element= this.dataService.getElement();
+    this.initForm();
   }
 
   initForm(){
     let form={};
-    for(let e of this.elementform){
-      let defaultValue=null;
-      if(e.type=='text' || e.type=='textarea'){
-        defaultValue='';
+    if(this.elementform.length>0){
+      for(let e of this.elementform){
+        let defaultValue=this.getValue(e);
+        if(e.required){
+          form[e.name]= [defaultValue, [Validators.required]];
+        }else{
+          form[e.name]= [defaultValue];
+        }
       }
-      if(e.required){
-        form[e.name]= [defaultValue, [Validators.required]];
-      }else{
-        form[e.name]= [defaultValue];
-      }
+      if(this.element!=null) form['id']=this.element['id'];
+      this.dataform= this.formBuilder.group(form);
+      return true;
     }
     this.dataform= this.formBuilder.group(form);
+    return false;
   }
 
+  getValue(e){
+    if(this.element==null){
+      if(e.type=='text' || e.type=='textarea'){
+        return '';
+      }else{
+        return null;
+      }
+    }
+    return this.element[e.name];
+  }
+/*
   initFormByElement(){
     let form={};
-    for(let e of this.elementform){
-      let defaultValue=null;
-      if(e.type=='text' || e.type=='textarea'){
-        defaultValue='';
+    if(this.elementform.length>0){
+      for(let e of this.elementform){
+        let defaultValue=this.element[e.name];
+        if(e.required){
+          form[e.name]= [defaultValue, [Validators.required]];
+        }else{
+          form[e.name]= [defaultValue];
+        }
       }
-      if(e.required){
-        form[e.name]= [defaultValue, [Validators.required]];
-      }else{
-        form[e.name]= [defaultValue];
-      }
+      form['id']=this.element['id'];
+      this.dataform= this.formBuilder.group(form);
+      return true;
     }
     this.dataform= this.formBuilder.group(form);
+    return false;
+  }
+*/
+  save(){
+    if(this.element==null){
+      this.dataService.add(this.dataform.value);
+    }else{
+      this.dataService.update(this.dataform.value);
+    }
+    this.router.navigate(['home']); 
+    return true;
   }
 
-  save(){
-    this.dataService.add(this.dataform.value);
-    document.getElementById('back').click();
+  volver(){
+    this.router.navigate(['home']);
+    return true;
   }
 }

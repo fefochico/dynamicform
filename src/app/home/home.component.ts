@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../service/data.service';
+import { Router } from '@angular/router';
+import { ConfigformService } from '../module/form/service/configform.service';
 
 @Component({
   selector: 'app-home',
@@ -13,14 +14,28 @@ export class HomeComponent implements OnInit {
   }
 
   list=[];
-  constructor(private dataService: DataService){}
+  configform=null;
+
+  constructor(private dataService: DataService, private router: Router, private configformService: ConfigformService){
+    this.configform=this.configformService.getConfigForm('persona');  
+  }
 
   onInit(): void {
   }
 
-  chosenEdit(obj){
-    this.dataService.setElement(obj);
-    document.getElementById('add').click();
+  newElement(){
+    this.dataService.setElement(null);
+    this.router.navigate(['form']);
+    return true; 
+  }
+
+  editElement(obj){
+    if(obj!=null){
+      this.dataService.setElement(obj);
+      this.router.navigate(['form']); 
+      return true;
+    }
+    return false;
   }
  
 }

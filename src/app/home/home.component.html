@@ -1,7 +1,18 @@
-<div>
-  <a id="add" href='' routerLink="/form">ADD</a>
+
+<div class="container">
+  <br>
+  <div class="row">
+    <div class="col-md-12 align-right">
+      <input type="button" class="btn btn-secondary" value="ADD" (click)="newElement()">
+    </div>
+  </div>
+  <div class="row" *ngFor="let l of list">
+    <div class="col-md-8 col-md-offset-2">
+      id: {{l['id']}},
+      <ng-container *ngFor="let c of configform">
+        {{c.label}}: {{l[c.name]}}, 
+      </ng-container>
+      <input type="button" class="btn btn-secondary" value="EDIT" (click)="editElement(l)">  
+    </div>
+  </div>
 </div>
-<div *ngFor="let l of list">
-  {{l['nombre']}}, {{l['apellidos']}}, <input type="button" value="EDIT" (click)="chosenEdit(l)">  
-</div>
-  
