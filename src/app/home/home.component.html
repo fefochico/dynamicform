@@ -2,12 +2,12 @@
 <div class="container">
   <br>
   <div class="row">
-    <div class="col-md-12 align-right">
+    <div class="col-md-8 offset-md-2 align-right">
       <input type="button" class="btn btn-secondary" value="ADD" (click)="newElement()">
     </div>
   </div>
   <div class="row" *ngFor="let l of list">
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-md-8 offset-md-2">
       id: {{l['id']}},
       <ng-container *ngFor="let c of configform">
         {{c.label}}: {{l[c.name]}}, 

@@ -13,6 +13,7 @@ describe('ConfigformService', () => {
     {value: 2, label: 'Policía'},
     {value: 3, label: 'Jubilado'}]
   }];
+  let name='person';
   let person=[
     {order: 1, name: 'nombre', label: 'Nombre', type: 'text', dependency: 0, required: true},
     {order: 2, name: 'apellidos', label: 'Apellidos', type: 'text', dependency: 0, required: true},
@@ -28,16 +29,16 @@ describe('ConfigformService', () => {
     const service: ConfigformService = TestBed.get(ConfigformService);
     expect(service.getFiltersForm('')).toEqual([]);
   });
-  it('Test function getFiltersForm persona', () => {
+  it('Test function getFiltersForm person', () => {
     const service: ConfigformService = TestBed.get(ConfigformService);
-    expect(service.getFiltersForm('persona')).toEqual(filterperson);
+    expect(service.getFiltersForm(name)).toEqual(filterperson);
   });
   it('Test function getConfigForm empty', () => {
     const service: ConfigformService = TestBed.get(ConfigformService);
     expect(service.getConfigForm('')).toEqual([]);
   });
-  it('Test function getConfigForm persona', () => {
+  it('Test function getConfigForm person', () => {
     const service: ConfigformService = TestBed.get(ConfigformService);
-    expect(service.getConfigForm('persona')).toEqual(person);
+    expect(service.getConfigForm(name)).toEqual(person);
   });
 });

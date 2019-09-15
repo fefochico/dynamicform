@@ -27,14 +27,14 @@ export class ConfigformService {
   constructor() { }
 
   getFiltersForm(nameservice: string){
-    if(nameservice=='persona'){
+    if(nameservice=='person'){
       return this.filterperson;
     }
     return [];
   }
 
   getConfigForm(nameservice: string){
-    if(nameservice=='persona'){
+    if(nameservice=='person'){
       return this.person;
     }
     return [];

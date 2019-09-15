@@ -1,41 +1,42 @@
-<div class="container">
+<div class="container" *ngIf="visible">
     <br>
     <div class="row">
-      <div class="col-md-12 align-right">
-        <input type="button" class="btn btn-secondary" (click)="volver()" value="BACK">
+      <div class="col-md-10 col-md-offset-1 align-right">
+        <input type="button" class="btn btn-secondary" (click)="back()" value="BACK">
       </div>
     </div>
     <br>
+    <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-8 offset-md-2">
           <form [formGroup]="dataform">
-
-              <ng-container *ngFor="let element of elementform">
+              <ng-container *ngFor="let ele of elementform">
                 <!--Input text-->
-                <div *ngIf="element['type']=='text'" class="form-group">
-                  <input type="text" class="form-control" formControlName="{{element['name']}}" placeholder="{{element['label']}}">
-                  <span *ngIf="dataform.get(element['name']).touched && 
-                  dataform.get(element['name']).invalid">El campo '{{element['label']}}' es necesario</span>
+                <div *ngIf="ele['type']=='text'" class="form-group">
+                  <input type="text" class="form-control" formControlName="{{ele['name']}}" placeholder="{{ele['label']}}">
+                  <span *ngIf="dataform.get(ele['name']).touched && 
+                  dataform.get(ele['name']).invalid">El campo '{{ele['label']}}' es necesario</span>
                 </div>
                 <!--Select-->
-                <div *ngIf="element['type']=='select' || element['type']=='multiselect'" class="form-group">
-                  <select class="custom-select" formControlName="{{element['name']}}">
-                    <option value="null">{{element['label']}}</option>
-                    <option *ngFor="let o of filters[0][element['name']]" value="{{o['value']}}">{{o['label']}}</option>    
+                <div *ngIf="ele['type']=='select' || ele['type']=='multiselect'" class="form-group">
+                  <select class="custom-select" formControlName="{{ele['name']}}">
+                    <option value="null">{{ele['label']}}</option>
+                    <option *ngFor="let o of filters[0][ele['name']]" value="{{o['value']}}">{{o['label']}}</option>    
                   </select>
-                  <span *ngIf="dataform.get(element['name']).touched && 
-                  (dataform.get(element['name']).invalid || dataform.get(element['name']).value==null)">El campo '{{element['label']}}' es necesario</span>
+                  <span *ngIf="dataform.get(ele['name']).touched && 
+                  (dataform.get(ele['name']).invalid || dataform.get(ele['name']).value==null)">El campo '{{ele['label']}}' es necesario</span>
                 </div>
                 <!--Textarea-->
-                <div *ngIf="element['type']=='textarea'" class="form-group">
-                  <textarea class="form-control" rows="4" cols="50" placeholder="{{element['label']}}" formControlName="{{element['name']}}"></textarea>
-                  <span *ngIf="dataform.get(element['name']).touched && 
-                  dataform.get(element['name']).invalid">El campo '{{element['label']}}' es necesario</span>
+                <div *ngIf="ele['type']=='textarea'" class="form-group">
+                  <textarea class="form-control" rows="4" cols="50" placeholder="{{ele['label']}}" formControlName="{{ele['name']}}"></textarea>
+                  <span *ngIf="dataform.get(ele['name']).touched && 
+                  dataform.get(ele['name']).invalid">El campo '{{ele['label']}}' es necesario</span>
                 </div>
               </ng-container>
               <button (click)="save()" class="btn btn-secondary" [disabled]="dataform.invalid">Guardar</button>
               </form>
       </div>
+    </div>
     </div>
 </div>
 

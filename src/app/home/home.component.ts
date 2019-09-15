@@ -9,6 +9,9 @@ import { ConfigformService } from '../module/form/service/configform.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  
+  name='person';
+  
   ngOnInit(): void {
     this.list= this.dataService.getAll();
   }
@@ -17,7 +20,7 @@ export class HomeComponent implements OnInit {
   configform=null;
 
   constructor(private dataService: DataService, private router: Router, private configformService: ConfigformService){
-    this.configform=this.configformService.getConfigForm('persona');  
+    this.configform=this.configformService.getConfigForm(this.name);  
   }
 
   onInit(): void {
