@@ -1,34 +1,22 @@
 import { Injectable } from '@angular/core';
-
+import personData from './../../../../assets/json/person.json';
+import personFiltersData from '../../../../assets/json/personfilters.json';
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigformService {
-
-  filterperson=[{ estado: [
-    {value: 1, label: 'Niño'},
-    {value: 2, label: 'Adulto'},
-    {value: 3, label: 'Jubilado'}]
-    ,profesion: [
-    {value: 1, label: 'Estudiante'},
-    {value: 2, label: 'Policía'},
-    {value: 3, label: 'Jubilado'}]
-  }];
-  /* Valor obtenido de una petición externa o definidos aqui */
-  person=[
-    {order: 1, name: 'nombre', label: 'Nombre', type: 'text', dependency: 0, required: true},
-    {order: 2, name: 'apellidos', label: 'Apellidos', type: 'text', dependency: 0, required: true},
-    {order: 3, name: 'estado', label: 'Estado', type: 'select', dependency: 0, required: true, options:null},
-    {order: 4, name: 'profesion', label: 'Profesión', type: 'multiselect', dependency: 0, required: false},
-    {order: 4, name: 'observaciones', label: 'Observaciones', type: 'textarea', dependency: 0, required: false},
-  ];
-
-
+  
+  filterperson = personFiltersData;
+  person=personData;
+ 
   constructor() { }
 
   getFiltersForm(nameservice: string){
     if(nameservice=='person'){
       return this.filterperson;
+    }
+    if(nameservice=='company'){
+      return [];
     }
     return [];
   }
@@ -37,6 +25,47 @@ export class ConfigformService {
     if(nameservice=='person'){
       return this.person;
     }
+    if(nameservice=='company'){
+      return [];
+    }
     return [];
+  }
+
+  getColumns(){
+    let columns=[];
+    let list= this.person;
+    for(let e of list){
+      if(!this.exist(columns, e.column)) columns.push(e.column);
+    }
+    return columns;
+  }
+
+  getRows(){
+    let rows= [];
+    let list= this.person;
+    for(let e of list){
+      if(!this.exist(rows, e.row)) rows.push(e.row);
+    }
+    console.log(rows);
+    return rows;
+  }
+
+  exist(list, element){
+    for(let e of list){
+      if(element==e){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  existRowsInColumn(c, r){
+    let list= this.person;
+    for(let e of list){
+      if(e.row==r && e.column==c){
+        return true;
+      }
+    }
+    return false;
   }
 }

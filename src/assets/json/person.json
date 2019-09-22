@@ -1,0 +1,57 @@
+[
+    {
+        "order": 1, 
+        "column": 1, 
+        "row": 1, 
+        "space": 6, 
+        "name": "name", 
+        "label": "Name", 
+        "type": "text", 
+        "dependency": 0, 
+        "required": true
+    },
+    {
+        "order": 2, 
+        "column": 1, 
+        "row": 1, 
+        "space": 6, 
+        "name": "surname", 
+        "label": "Surname", 
+        "type": "text", 
+        "dependency": 0, 
+        "required": true
+    },
+    {
+        "order": 3, 
+        "column": 1, 
+        "row": 2, 
+        "space": 12, 
+        "name": "status",
+        "label": "Status", 
+        "type": "select", 
+        "dependency": 0, 
+        "required": true, 
+        "options":null
+    },
+    {
+        "order": 4, 
+        "column": 1, 
+        "row": 3, 
+        "space": 12, 
+        "name": "occupation", 
+        "label": "Occupation", 
+        "type": "multiselect", 
+        "dependency": 0, 
+        "required": false
+    },
+    {
+        "order": 4, 
+        "column": 1, 
+        "row": 4, 
+        "space": 12, 
+        "name": "observation", 
+        "label": "Observation", 
+        "type": "textarea", 
+        "dependency": 0, 
+        "required": false}
+  ]

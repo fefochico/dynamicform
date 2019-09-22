@@ -10,31 +10,41 @@
     <div class="row">
       <div class="col-md-8 offset-md-2">
           <form [formGroup]="dataform">
-              <ng-container *ngFor="let ele of elementform">
-                <!--Input text-->
-                <div *ngIf="ele['type']=='text'" class="form-group">
-                  <input type="text" class="form-control" formControlName="{{ele['name']}}" placeholder="{{ele['label']}}">
-                  <span *ngIf="dataform.get(ele['name']).touched && 
-                  dataform.get(ele['name']).invalid">El campo '{{ele['label']}}' es necesario</span>
-                </div>
-                <!--Select-->
-                <div *ngIf="ele['type']=='select' || ele['type']=='multiselect'" class="form-group">
-                  <select class="custom-select" formControlName="{{ele['name']}}">
-                    <option value="null">{{ele['label']}}</option>
-                    <option *ngFor="let o of filters[0][ele['name']]" value="{{o['value']}}">{{o['label']}}</option>    
-                  </select>
-                  <span *ngIf="dataform.get(ele['name']).touched && 
-                  (dataform.get(ele['name']).invalid || dataform.get(ele['name']).value==null)">El campo '{{ele['label']}}' es necesario</span>
-                </div>
-                <!--Textarea-->
-                <div *ngIf="ele['type']=='textarea'" class="form-group">
-                  <textarea class="form-control" rows="4" cols="50" placeholder="{{ele['label']}}" formControlName="{{ele['name']}}"></textarea>
-                  <span *ngIf="dataform.get(ele['name']).touched && 
-                  dataform.get(ele['name']).invalid">El campo '{{ele['label']}}' es necesario</span>
-                </div>
-              </ng-container>
-              <button (click)="save()" class="btn btn-secondary" [disabled]="dataform.invalid">Guardar</button>
-              </form>
+            <div class="row">
+              <div class="col-md-{{12/configformService.getColumns().length}}" *ngFor="let c of configformService.getColumns()">
+                <ng-container *ngFor="let r of configformService.getRows()">
+                    <div class="row" *ngIf="configformService.existRowsInColumn(c, r)">
+                      <ng-container *ngFor="let ele of elementform">
+                        <div class="col-md-{{ele['space']}}" *ngIf="c==ele['column'] && r==ele['row']">
+                          <!--Input text-->
+                          <div *ngIf="ele['type']=='text'" class="form-group">
+                            <input type="text" class="form-control" formControlName="{{ele['name']}}" placeholder="{{ele['label']}}">
+                            <span *ngIf="dataform.get(ele['name']).touched && 
+                            dataform.get(ele['name']).invalid">Field '{{ele['label']}}' is necessary</span>
+                          </div>
+                          <!--Select-->
+                          <div *ngIf="ele['type']=='select' || ele['type']=='multiselect'" class="form-group">
+                            <select class="custom-select" formControlName="{{ele['name']}}">
+                              <option value="null">{{ ele['label']}}</option>
+                              <option *ngFor="let o of filters[0][ele['name']]" value="{{o['value']}}">{{o['label']}}</option>    
+                            </select>
+                            <span *ngIf="dataform.get(ele['name']).touched && 
+                            (dataform.get(ele['name']).invalid || dataform.get(ele['name']).value==null)">Field '{{ele['label']}}' is necessary</span>
+                          </div>
+                          <!--Textarea-->
+                          <div *ngIf="ele['type']=='textarea'" class="form-group">
+                            <textarea class="form-control" rows="4" cols="50" placeholder="{{ ele['label']}}" formControlName="{{ele['name']}}"></textarea>
+                            <span *ngIf="dataform.get(ele['name']).touched && 
+                            dataform.get(ele['name']).invalid">Field '{{ele['label']}}' is necessary</span>
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+                </ng-container>  
+              </div>
+            </div>
+          <button (click)="save()" class="btn btn-secondary pull-right" [disabled]="dataform.invalid">SAVE</button>
+        </form>
       </div>
     </div>
     </div>

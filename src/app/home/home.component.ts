@@ -19,8 +19,9 @@ export class HomeComponent implements OnInit {
   list=[];
   configform=null;
 
-  constructor(private dataService: DataService, private router: Router, private configformService: ConfigformService){
-    this.configform=this.configformService.getConfigForm(this.name);  
+  constructor(private dataService: DataService, private router: Router, 
+    private configformService: ConfigformService){
+    this.configform=this.configformService.getConfigForm(this.name); 
   }
 
   onInit(): void {

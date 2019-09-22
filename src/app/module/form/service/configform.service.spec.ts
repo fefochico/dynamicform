@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { ConfigformService } from './configform.service';
 
+
 describe('ConfigformService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   let filterperson=[{ estado: [
@@ -14,6 +15,8 @@ describe('ConfigformService', () => {
     {value: 3, label: 'Jubilado'}]
   }];
   let name='person';
+
+  //let person=PersonJson;
   let person=[
     {order: 1, name: 'nombre', label: 'Nombre', type: 'text', dependency: 0, required: true},
     {order: 2, name: 'apellidos', label: 'Apellidos', type: 'text', dependency: 0, required: true},

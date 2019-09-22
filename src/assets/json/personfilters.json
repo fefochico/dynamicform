@@ -1,0 +1,9 @@
+[{ "status": [
+    {"value": 1, "label": "Child"},
+    {"value": 2, "label": "Adult"},
+    {"value": 3, "label": "Ederly"}]
+    ,"occupation": [
+    {"value": 1, "label": "Student"},
+    {"value": 2, "label": "Police officer"},
+    {"value": 3, "label": "Retired"}]
+  }]
