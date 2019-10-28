@@ -45,6 +45,7 @@ export class DataService {
       this.chosenElement=obj;
       return this.chosenElement;
     }
+    this.chosenElement=null;
     return null;
   }
 
