@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import personData from './../../../../assets/json/person.json';
-import personFiltersData from '../../../../assets/json/personfilters.json';
+import personData from './../../../../assets/json/form/person.json';
+import personFiltersData from '../../../../assets/json/filters/person.json';
 @Injectable({
   providedIn: 'root'
 })

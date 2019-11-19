@@ -15,23 +15,23 @@ export class FormComponent implements OnInit {
   name='person';
 
   filters= null;
-  elementform=null;
+  schemaform=null;
 
   dataform=null;
   element=null;
 
-  visible=false;
+  public visible=false;
 
   constructor(private router: Router, private formBuilder: FormBuilder, 
     private dataService: DataService, private configformService: ConfigformService){
     this.filters= this.configformService.getFiltersForm(this.name); 
-    this.elementform= this.configformService.getConfigForm(this.name); 
+    this.schemaform= this.configformService.getConfigForm(this.name); 
   }
 
   setNameForm(name){
     this.name=name;
     this.filters= this.configformService.getFiltersForm(this.name); 
-    this.elementform= this.configformService.getConfigForm(this.name); 
+    this.schemaform= this.configformService.getConfigForm(this.name); 
     return true;
   }
 
@@ -47,8 +47,8 @@ export class FormComponent implements OnInit {
 
   initForm(){
     let form={};
-    if(this.elementform.length>0){
-      for(let e of this.elementform){
+    if(this.schemaform.length>0){
+      for(let e of this.schemaform){
         let defaultValue=this.getValue(e);
         if(e.required){
           form[e.name]= [defaultValue, [Validators.required]];
@@ -59,11 +59,9 @@ export class FormComponent implements OnInit {
       if(this.element!=null) form['id']=this.element['id'];
       this.dataform= this.formBuilder.group(form);
       this.visible=true;
-      return 1;
     }
     this.dataform= this.formBuilder.group(form);
     this.visible=true;
-    return 0;
   }
 
   getValue(e){
@@ -81,17 +79,13 @@ export class FormComponent implements OnInit {
     let result=0;
     if(this.element==null){
       this.dataService.add(this.dataform.value);
-      result= 1;
     }else{
       this.dataService.update(this.dataform.value);
-      result= 2;
     }
     this.router.navigate(['home']); 
-    return result;
   }
 
   back(){
     this.router.navigate(['home']);
-    return true;
   }
 }

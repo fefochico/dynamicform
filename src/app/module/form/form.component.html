@@ -14,7 +14,7 @@
               <div class="col-md-{{12/configformService.getColumns().length}}" *ngFor="let c of configformService.getColumns()">
                 <ng-container *ngFor="let r of configformService.getRows()">
                     <div class="row" *ngIf="configformService.existRowsInColumn(c, r)">
-                      <ng-container *ngFor="let ele of elementform">
+                      <ng-container *ngFor="let ele of schemaform">
                         <div class="col-md-{{ele['space']}}" *ngIf="c==ele['column'] && r==ele['row']">
                           <!--Input text-->
                           <div *ngIf="ele['type']=='text'" class="form-group">
